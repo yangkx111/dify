@@ -47,6 +47,7 @@ x-shared-env: &shared-api-worker-env
   DB_PASSWORD: ${DB_PASSWORD:-difyai123456}
   DB_HOST: ${DB_HOST:-db}
   DB_PORT: ${DB_PORT:-5432}
+  EXPOSE_DB_PORT: ${EXPOSE_DB_PORT:-5432}
   DB_DATABASE: ${DB_DATABASE:-dify}
   SQLALCHEMY_POOL_SIZE: ${SQLALCHEMY_POOL_SIZE:-30}
   SQLALCHEMY_POOL_RECYCLE: ${SQLALCHEMY_POOL_RECYCLE:-3600}
@@ -523,6 +524,8 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
+    ports:
+      - '${EXPOSE_DB_PORT:-5432}:${DB_PORT:-5432}'
 
   # The redis cache.
   redis:
