@@ -49,7 +49,7 @@ const InputsFormNode = ({
             <InputsFormContent showTip={!!currentConversationId} />
           </div>
         )}
-        {!collapsed && !currentConversationId && (
+        {/* {!collapsed && !currentConversationId && (
           <div className={cn('p-6', isMobile && 'p-4')}>
             <Button
               variant='primary'
@@ -64,7 +64,7 @@ const InputsFormNode = ({
               }
             >{t('share.chat.startChat')}</Button>
           </div>
-        )}
+        )} */}
       </div>
       {collapsed && (
         <div className='py-4 flex items-center w-full max-w-[720px]'>

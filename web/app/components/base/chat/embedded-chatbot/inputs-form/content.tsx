@@ -24,6 +24,7 @@ const InputsFormContent = ({ showTip }: Props) => {
   } = useEmbeddedChatbotContext()
   const inputsFormValue = currentConversationId ? currentConversationItem?.inputs : newConversationInputs
   const readonly = !!currentConversationId
+  const isDisabled = !!(new URLSearchParams(window.location.search).get('token') || new URLSearchParams(window.location.search).get('userId'))
 
   const handleFormChange = useCallback((variable: string, value: any) => {
     handleNewConversationInputsChange({
@@ -48,7 +49,7 @@ const InputsFormContent = ({ showTip }: Props) => {
               onChange={e => handleFormChange(form.variable, e.target.value)}
               placeholder={form.label}
               readOnly={readonly}
-              disabled={readonly}
+              disabled={isDisabled || readonly}
             />
           )}
           {form.type === InputVarType.number && (
