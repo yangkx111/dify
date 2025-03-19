@@ -14,7 +14,11 @@ function getProcessedInputsFromUrlParams(): Record<string, any> {
   const urlParams = new URLSearchParams(window.location.search)
   const inputs: Record<string, any> = {}
   urlParams.forEach(async (value, key) => {
-    inputs[key] = await decodeBase64AndDecompress(decodeURIComponent(value))
+    if(key !== 'token' && key !== 'userId')
+      inputs[key] = await decodeBase64AndDecompress(decodeURIComponent(value))
+
+    else
+      inputs[key] = value
   })
   return inputs
 }
