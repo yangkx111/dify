@@ -1,11 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  RiArrowDownSLine,
-  RiArrowRightSLine,
-  RiHammerFill,
-  RiLoader2Line,
-} from '@remixicon/react'
+
 import type { ToolInfoInThought } from '../type'
 import cn from '@/utils/classnames'
 
@@ -28,7 +23,7 @@ const ToolDetail = ({
         expand && 'border-[0.5px] border-components-panel-border-subtle bg-background-section-burn',
       )}
     >
-      <div
+      {/* <div
         className={cn(
           'flex items-center system-xs-medium text-text-tertiary px-2.5 py-2 cursor-pointer',
           expand && 'pb-1.5',
@@ -41,7 +36,7 @@ const ToolDetail = ({
         <div className='mx-1 text-text-secondary'>{toolLabel}</div>
         {!expand && <RiArrowRightSLine className='w-4 h-4' />}
         {expand && <RiArrowDownSLine className='ml-auto w-4 h-4' />}
-      </div>
+      </div> */}
       {
         expand && (
           <>

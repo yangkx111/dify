@@ -2,16 +2,11 @@ import {
   useEffect,
   useState,
 } from 'react'
-import {
-  RiArrowRightSLine,
-  RiErrorWarningFill,
-  RiLoader2Line,
-} from '@remixicon/react'
+
 import { useTranslation } from 'react-i18next'
 import type { ChatItem, WorkflowProcess } from '../../types'
 import TracingPanel from '@/app/components/workflow/run/tracing-panel'
 import cn from '@/utils/classnames'
-import { CheckCircle } from '@/app/components/base/icons/src/vender/solid/general'
 import { WorkflowRunningStatus } from '@/app/components/workflow/types'
 
 type WorkflowProcessProps = {
@@ -50,7 +45,7 @@ const WorkflowProcessItem = ({
         collapse && 'bg-workflow-process-bg',
       )}
     >
-      <div
+      {/* <div
         className={cn('flex items-center cursor-pointer', !collapse && 'px-1.5', readonly && 'cursor-default')}
         onClick={() => !readonly && setCollapse(!collapse)}
       >
@@ -73,7 +68,7 @@ const WorkflowProcessItem = ({
           {t('workflow.common.workflowProcess')}
         </div>
         {!readonly && <RiArrowRightSLine className={cn('ml-1 w-4 h-4 text-text-tertiary', !collapse && 'rotate-90')} />}
-      </div>
+      </div> */}
       {
         !collapse && !readonly && (
           <div className='mt-1.5'>

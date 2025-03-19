@@ -19,7 +19,6 @@ import Loading from '@/app/components/base/loading'
 import LogoHeader from '@/app/components/base/logo/logo-embedded-chat-header'
 import Header from '@/app/components/base/chat/embedded-chatbot/header'
 import ChatWrapper from '@/app/components/base/chat/embedded-chatbot/chat-wrapper'
-import LogoSite from '@/app/components/base/logo/logo-site'
 import cn from '@/utils/classnames'
 
 const Chatbot = () => {
@@ -105,7 +104,7 @@ const Chatbot = () => {
         </div>
       </div>
       {/* powered by */}
-      {isMobile && (
+      {/* {isMobile && (
         <div className='shrink-0 h-[60px] pl-2 flex items-center'>
           {!appData?.custom_config?.remove_webapp_brand && (
             <div className={cn(
@@ -121,7 +120,7 @@ const Chatbot = () => {
             </div>
           )}
         </div>
-      )}
+      )} */}
     </div>
   )
 }

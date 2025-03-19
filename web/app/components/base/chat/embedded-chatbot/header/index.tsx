@@ -88,7 +88,7 @@ const Header: FC<IHeaderProps> = ({
           {title}
         </div>
       </div>
-      <div className='flex items-center gap-1'>
+      {/* <div className='flex items-center gap-1'>
         {currentConversationId && (
           <Tooltip
             popupContent={t('share.chat.resetChat')}
@@ -101,7 +101,7 @@ const Header: FC<IHeaderProps> = ({
         {currentConversationId && inputsForms.length > 0 && (
           <ViewFormDropdown iconColor={theme?.colorPathOnHeader} />
         )}
-      </div>
+      </div> */}
     </div>
   )
 }
