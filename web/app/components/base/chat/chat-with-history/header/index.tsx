@@ -2,7 +2,6 @@ import { useCallback, useState } from 'react'
 import {
   RiEditBoxLine,
   RiLayoutRight2Line,
-  RiResetLeftLine,
 } from '@remixicon/react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -12,7 +11,6 @@ import Operation from './operation'
 import ActionButton, { ActionButtonState } from '@/app/components/base/action-button'
 import AppIcon from '@/app/components/base/app-icon'
 import Tooltip from '@/app/components/base/tooltip'
-import ViewFormDropdown from '@/app/components/base/chat/chat-with-history/inputs-form/view-form-dropdown'
 import Confirm from '@/app/components/base/confirm'
 import RenameModal from '@/app/components/base/chat/chat-with-history/sidebar/rename-modal'
 import type { ConversationItem } from '@/models/share'
@@ -124,7 +122,7 @@ const Header = () => {
             </Tooltip>
           )}
         </div>
-        <div className='flex items-center gap-1'>
+        {/* <div className='flex items-center gap-1'>
           {currentConversationId && (
             <Tooltip
               popupContent={t('share.chat.resetChat')}
@@ -137,7 +135,7 @@ const Header = () => {
           {currentConversationId && inputsForms.length > 0 && (
             <ViewFormDropdown />
           )}
-        </div>
+        </div> */}
       </div>
       {!!showConfirm && (
         <Confirm

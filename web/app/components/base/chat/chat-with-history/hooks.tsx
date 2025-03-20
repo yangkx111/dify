@@ -16,7 +16,7 @@ import type {
   Feedback,
 } from '../types'
 import { CONVERSATION_ID_INFO } from '../constants'
-import { buildChatItemTree } from '../utils'
+import { buildChatItemTree, getProcessedInputsFromUrlParams } from '../utils'
 import { addFileInfos, sortAgentSorts } from '../../../tools/utils'
 import { getProcessedFilesFromResponse } from '@/app/components/base/file-uploader/utils'
 import {
@@ -167,6 +167,7 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
   const { t } = useTranslation()
   const newConversationInputsRef = useRef<Record<string, any>>({})
   const [newConversationInputs, setNewConversationInputs] = useState<Record<string, any>>({})
+  const [initInputs, setInitInputs] = useState<Record<string, any>>({})
   const handleNewConversationInputsChange = useCallback((newInputs: Record<string, any>) => {
     newConversationInputsRef.current = newInputs
     setNewConversationInputs(newInputs)
@@ -206,12 +207,15 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
         }
       }
 
+      const value = initInputs[item['text-input'].variable]
+
       return {
         ...item['text-input'],
+        default: value || item.default,
         type: 'text-input',
       }
     })
-  }, [appParams])
+  }, [appParams, initInputs])
   useEffect(() => {
     const conversationInputs: Record<string, any> = {}
 
@@ -220,6 +224,11 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
     })
     handleNewConversationInputsChange(conversationInputs)
   }, [handleNewConversationInputsChange, inputsForms])
+
+  useEffect(() => {
+    // init inputs from url params
+    setInitInputs(getProcessedInputsFromUrlParams())
+  }, [])
 
   const { data: newConversation } = useSWR(newConversationId ? [isInstalledApp, appId, newConversationId] : null, () => generationConversationName(isInstalledApp, appId, newConversationId), { revalidateOnFocus: false })
   const [originConversationList, setOriginConversationList] = useState<ConversationItem[]>([])
@@ -319,7 +328,10 @@ export const useChatWithHistory = (installedAppInfo?: InstalledApp) => {
     currentChatInstanceRef.current.handleStop()
     setShowNewConversationItemInList(true)
     handleChangeConversation('')
-    handleNewConversationInputsChange({})
+    handleNewConversationInputsChange({
+      userId: '12312',
+      token: '12321',
+    })
     setClearChatList(true)
   }, [handleChangeConversation, setShowNewConversationItemInList, handleNewConversationInputsChange, setClearChatList])
   const handleUpdateConversationList = useCallback(() => {
