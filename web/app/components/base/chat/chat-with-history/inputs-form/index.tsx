@@ -1,9 +1,5 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Message3Fill } from '@/app/components/base/icons/src/public/other'
-import Button from '@/app/components/base/button'
-import Divider from '@/app/components/base/divider'
-import InputsFormContent from '@/app/components/base/chat/chat-with-history/inputs-form/content'
 import { useChatWithHistoryContext } from '../context'
 import cn from '@/utils/classnames'
 
@@ -26,7 +22,7 @@ const InputsFormNode = ({
 
   return (
     <div className={cn('pt-6 px-4 flex flex-col items-center', isMobile && 'pt-4')}>
-      <div className={cn(
+      {/* <div className={cn(
         'w-full max-w-[672px] bg-components-panel-bg rounded-2xl border-[0.5px] border-components-panel-border shadow-md',
         collapsed && 'bg-components-card-bg border border-components-card-border shadow-none',
       )}>
@@ -71,7 +67,7 @@ const InputsFormNode = ({
           <Divider bgStyle='gradient' className='basis-1/2 h-px rotate-180' />
           <Divider bgStyle='gradient' className='basis-1/2 h-px' />
         </div>
-      )}
+      )} */}
     </div>
   )
 }

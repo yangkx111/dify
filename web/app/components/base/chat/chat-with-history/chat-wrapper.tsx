@@ -184,8 +184,8 @@ const ChatWrapper = () => {
       return null
     if (!welcomeMessage)
       return null
-    if (!collapsed && inputsForms.length > 0)
-      return null
+    // if (!collapsed && inputsForms.length > 0)
+    //   return null
     if (welcomeMessage.suggestedQuestions && welcomeMessage.suggestedQuestions?.length > 0) {
       return (
         <div className='h-[50vh] py-12 px-4 flex items-center justify-center'>

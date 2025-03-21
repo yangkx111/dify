@@ -6,7 +6,6 @@ import {
 import { useChatWithHistoryContext } from './context'
 import Operation from './header/operation'
 import Sidebar from './sidebar'
-import MobileOperationDropdown from './header/mobile-operation-dropdown'
 import AppIcon from '@/app/components/base/app-icon'
 import ActionButton from '@/app/components/base/action-button'
 import { Message3Fill } from '@/app/components/base/icons/src/public/other'
@@ -96,10 +95,10 @@ const HeaderInMobile = () => {
             />
           )}
         </div>
-        <MobileOperationDropdown
+        {/* <MobileOperationDropdown
           handleResetChat={handleNewConversation}
           handleViewChatSettings={() => setShowChatSettings(true)}
-        />
+        /> */}
       </div>
       {showSidebar && (
         <div className='fixed inset-0 z-50 flex p-1 bg-background-overlay'
