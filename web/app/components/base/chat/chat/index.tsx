@@ -19,6 +19,9 @@ import type {
   OnRegenerate,
   OnSend,
 } from '../types'
+import {
+  RiArrowDownDoubleFill,
+} from '@remixicon/react'
 import type { ThemeBuilder } from '../embedded-chatbot/theme/theme-context'
 import Question from './question'
 import Answer from './answer'
@@ -123,26 +126,29 @@ const Chat: FC<ChatProps> = ({
     setShowAgentLogModal: state.setShowAgentLogModal,
   })))
   const [width, setWidth] = useState(0)
+  const [userScrolledRef, setuserScrolledRef] = useState(true)
   const chatContainerRef = useRef<HTMLDivElement>(null)
   const chatContainerInnerRef = useRef<HTMLDivElement>(null)
   const chatFooterRef = useRef<HTMLDivElement>(null)
   const chatFooterInnerRef = useRef<HTMLDivElement>(null)
-  const userScrolledRef = useRef(false)
 
   const handleScrollToBottom = useCallback(() => {
-    if (chatList.length > 1 && chatContainerRef.current && !userScrolledRef.current)
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+    if (chatList.length > 1 && chatContainerRef.current)
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight - chatContainerRef.current.clientHeight
+
+    else
+      setuserScrolledRef(false)
   }, [chatList.length])
 
   const handleWindowResize = useCallback(() => {
     if (chatContainerRef.current)
       setWidth(document.body.clientWidth - (chatContainerRef.current?.clientWidth + 16) - 8)
 
-    if (chatContainerRef.current && chatFooterRef.current)
-      chatFooterRef.current.style.width = `${chatContainerRef.current.clientWidth}px`
+    // if (chatContainerRef.current && chatFooterRef.current)
+    //   chatFooterRef.current.style.width = `${chatContainerRef.current.clientWidth}px`
 
-    if (chatContainerInnerRef.current && chatFooterInnerRef.current)
-      chatFooterInnerRef.current.style.width = `${chatContainerInnerRef.current.clientWidth}px`
+    // if (chatContainerInnerRef.current && chatFooterInnerRef.current)
+    //   chatFooterInnerRef.current.style.width = `${chatContainerInnerRef.current.clientWidth}px`
   }, [])
 
   useEffect(() => {
@@ -151,7 +157,7 @@ const Chat: FC<ChatProps> = ({
   }, [handleScrollToBottom, handleWindowResize])
 
   useEffect(() => {
-    if (chatContainerRef.current) {
+    if (chatContainerRef.current && isResponding && !userScrolledRef) {
       requestAnimationFrame(() => {
         handleScrollToBottom()
         handleWindowResize()
@@ -171,7 +177,8 @@ const Chat: FC<ChatProps> = ({
           const { blockSize } = entry.borderBoxSize[0]
 
           chatContainerRef.current!.style.paddingBottom = `${blockSize}px`
-          handleScrollToBottom()
+          if(!userScrolledRef)
+            handleScrollToBottom()
         }
       })
 
@@ -188,7 +195,7 @@ const Chat: FC<ChatProps> = ({
     if (chatContainer) {
       const setUserScrolled = () => {
         if (chatContainer)
-          userScrolledRef.current = chatContainer.scrollHeight - chatContainer.scrollTop > chatContainer.clientHeight
+          setuserScrolledRef((chatContainer.scrollHeight - chatContainer.scrollTop) > chatContainer.clientHeight)
       }
       chatContainer.addEventListener('scroll', setUserScrolled)
       return () => chatContainer.removeEventListener('scroll', setUserScrolled)
@@ -262,7 +269,7 @@ const Chat: FC<ChatProps> = ({
           </div>
         </div>
         <div
-          className={`absolute bottom-0 bg-chat-input-mask flex justify-center ${(hasTryToAsk || !noChatInput || !noStopResponding) && chatFooterClassName}`}
+          className='absolute bottom-0  flex justify-center w-full'
           ref={chatFooterRef}
         >
           <div
@@ -278,6 +285,13 @@ const Chat: FC<ChatProps> = ({
                   </Button>
                 </div>
               )
+            }
+            {
+              <div style={{ visibility: userScrolledRef ? 'visible' : 'hidden' }} className='flex justify-end mb-2 mr-[5%]'>
+                <Button onClick={handleScrollToBottom}>
+                  <RiArrowDownDoubleFill className=' text-gray-500' />
+                </Button>
+              </div>
             }
             {
               hasTryToAsk && (

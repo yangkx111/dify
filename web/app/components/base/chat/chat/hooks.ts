@@ -159,6 +159,7 @@ export const useChat = (
     handleResponding(false)
     if (stopChat && taskIdRef.current)
       stopChat(taskIdRef.current)
+
     if (conversationMessagesAbortControllerRef.current)
       conversationMessagesAbortControllerRef.current.abort()
     if (suggestedQuestionsAbortControllerRef.current)
@@ -273,6 +274,10 @@ export const useChat = (
     hasStopResponded.current = false
 
     const { query, files, inputs, ...restData } = data
+    // 处理请求的接口需要每次取最新，不取历史数据的值
+    inputs.token = new URLSearchParams(window.location.search).get('token') || ''
+    inputs.userId = new URLSearchParams(window.location.search).get('userId') || ''
+    inputs.user = new URLSearchParams(window.location.search).get('user') || ''
     const bodyParams = {
       response_mode: 'streaming',
       conversation_id: conversationId.current,
@@ -280,6 +285,7 @@ export const useChat = (
       query,
       inputs: getProcessedInputs(inputs || {}, formSettings?.inputsForm || []),
       ...restData,
+      user: new URLSearchParams(window.location.search).get('user') || '',
     }
     if (bodyParams?.files?.length) {
       bodyParams.files = bodyParams.files.map((item) => {
@@ -335,8 +341,9 @@ export const useChat = (
 
           if (isFirstMessage && newConversationId)
             conversationId.current = newConversationId
+          if(taskId)
+            taskIdRef.current = taskId
 
-          taskIdRef.current = taskId
           if (messageId)
             responseItem.id = messageId
 
